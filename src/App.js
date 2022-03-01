@@ -5,19 +5,19 @@ import { globalStyle } from "./utils/globalStyle";
 import { BASE_URL } from "./utils/utils";
 
 function App() {
-  const [words, setWords] = useState([]);
+  const [word, setWord] = useState("");
   const [query, setQuery] = useState("Discovery");
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await axios.get(BASE_URL + query);
-      setWords(data.data);
+      setWord(data.data[0]);
     };
     fetchData().catch(console.error);
   }, [query]);
 
-  if (words.length <= 0) {
+  if (word === "") {
     return <div>Loading...</div>;
   }
 
@@ -41,9 +41,7 @@ function App() {
             onChange={handleFiltering}
           ></input>
         </form>
-        {words.map((word, idx) => {
-          return <WordsParent key={idx} object={word} />;
-        })}
+        <WordsParent object={word} />
       </div>
     </>
   );
