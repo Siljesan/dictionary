@@ -8,14 +8,24 @@ import { BASE_URL } from "../utils/utils";
 function Details() {
   const { location } = useParams();
   const [word, setWord] = useState({});
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await axios.get(BASE_URL + location);
       setWord(data.data[0]);
     };
-    fetchData().catch(console.error);
+    fetchData().catch((error) => setError(error));
   }, [location]);
+
+  if (error) {
+    return (
+      <div>
+        <h1>Something went wrong</h1>
+        <p>{error.message}</p>
+      </div>
+    );
+  }
 
   if (!word.hasOwnProperty("word")) {
     return <div>{location} Loading...</div>;
