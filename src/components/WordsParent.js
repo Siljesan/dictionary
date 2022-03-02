@@ -1,5 +1,6 @@
 import React from "react";
 import Meaning from "./Meaning";
+import { StyledLink } from "./navigation/StyledLink";
 
 function WordsParent({ object }) {
   const meaning = object.meanings;
@@ -7,10 +8,8 @@ function WordsParent({ object }) {
   return (
     <>
       <h2>{object.word}</h2>
-      <p>{object.phonetic}</p>
-      {meaning.map((meaning, idx) => {
-        return <Meaning key={idx} object={meaning} />;
-      })}
+      <h3>{object.phonetic}</h3>
+      <StyledLink to={`/${object.word}`}>Click me</StyledLink>
     </>
   );
 }
